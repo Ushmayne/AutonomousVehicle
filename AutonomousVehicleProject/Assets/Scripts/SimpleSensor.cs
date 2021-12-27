@@ -54,7 +54,7 @@ public class SimpleSensor : MonoBehaviour
         //Print info on the hit object if there was a hit object
         if (hit.collider != null)
         {
-            print("Raycast hit object: " + hit.collider);
+            Debug.Log("Raycast hit object: " + hit.collider);
         }
         
         //Done waiting, can call again
