@@ -11,18 +11,44 @@ public class SensorManager : MonoBehaviour
 	[SerializeField] private GameObject sensorParent; //parent object that contains all needed sensors as its children
 	private VehicleController vehicleController; //VehicleController script gotten from this object
 
+	private List<HitObject> allHitObjects;
+	[SerializeField] private float sensorDataRetrievalInterval = 1.5f;
+	private float dataRetrievalTimer = 0.0f;
+	
     void Start(){
+		allHitObjects = new List<HitObject>();
         vehicleController = GetComponent<VehicleController>();
     }
 
-	//TODO : function to retrieve all angles and positions from sensors and apply any noise necessary
-	//then send that updated positioning/rotation to vehicle using VehicleController script
-	//might need to split into two functions for simplicity's sake
+	//gets all hit objects from all sensors and stores them in allHitObjects
+	private void ExtractSensorHitObjects(){
+		if (sensorParent == null) return;
+		
+		allHitObjects.Clear();
+		
+		foreach (Transform t in sensorParent){
+			Sensor s = t.GetComponent<Sensor>();
+			if (s is SimpleSensor simpleSensor){
+				allHitObjects.Add(simpleSensor.GetHitObject());
+			}
+			else if (s is RadarSensor radarSensor){
+				allHitObjects.AddRange(radarSensor.GetHitObjects());
+			}
+		}
+	}
+
 	private void ProcessSensorData(){}
 	
+	void Update(){
+		
+		//update sensor data every time interval
+		dataRetrievalTimer += Time.deltaTime;
+		
+		if (dataRetrievalTimer >= sensorDataRetrievalInterval){
+			ExtractSensorHitObjects();
+			dataRetrievalTimer = 0.0f;
+		}
+	}
 	
-    void Update()
-    {
-        //move car
-    }
+
 }

@@ -4,15 +4,14 @@ using UnityEngine;
 
 namespace Sensors
 {
-    public class RadarSensor : MonoBehaviour
+    public class RadarSensor : Sensor
     {
         public float angleIncAmt = 5;   //This is how many degrees the sensor will adjust every time it sends out a raycast
         public Vector3 currentAngleVector;    //This is the current angle that a raycast is being sent from 
         private float currentAngleDegs = 0;
         private bool isWaiting = false; //True if the program is currently waiting to cast a ray
         private float rayDelay = 0.05f;    //Amount of time between raycasts 
-
-        public float inaccuracy;
+		
         private List<HitObject> hitObjects;
         
         void Start()
@@ -81,18 +80,7 @@ namespace Sensors
             isWaiting = false;
         }
 
-        public float GetInaccurateDistance(float accurateDist)
-        {
-            //Determine how much the sensor can be inaccurate by
-            float varianceAmt = accurateDist * inaccuracy;
-            
-            //Determine the bounds of inaccuracy for the sensor
-            float lowerBound = accurateDist - varianceAmt;
-            float upperBound = accurateDist + varianceAmt;
-            
-            //Now generate a number between the lower bound and upper bound
-            return Random.Range(lowerBound, upperBound);
-        }
+		public List<hitObjects> GetHitObjects(){ return hitObjects; }
 
         public void ResetHitObjects()
         {

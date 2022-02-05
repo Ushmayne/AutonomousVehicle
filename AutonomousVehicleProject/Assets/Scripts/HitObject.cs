@@ -5,6 +5,11 @@
 
     public HitObject(float distance, float angle)
     {
+        UpdateValues(float distance, float angle);
+    }
+	
+	public void UpdateValues(float distance, float angle)
+    {
         this.distance = distance;
         this.angle = angle;
     }
