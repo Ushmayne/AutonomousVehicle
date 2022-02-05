@@ -5,7 +5,7 @@
 
     public HitObject(float distance, float angle)
     {
-        UpdateValues(float distance, float angle);
+        UpdateValues(distance, angle);
     }
 	
 	public void UpdateValues(float distance, float angle)

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 /*
@@ -26,7 +27,7 @@ public class SensorManager : MonoBehaviour
 		
 		allHitObjects.Clear();
 		
-		foreach (Transform t in sensorParent){
+		foreach (Transform t in sensorParent.transform){
 			Sensor s = t.GetComponent<Sensor>();
 			if (s is SimpleSensor simpleSensor){
 				allHitObjects.Add(simpleSensor.GetHitObject());

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class Sensor : MonoBehaviour
 {
-	public float inaccuracy = 0.05f;;
+	public float inaccuracy = 0.05f;
 	
     public virtual float GetInaccurateDistance(float accurateDist)
         {

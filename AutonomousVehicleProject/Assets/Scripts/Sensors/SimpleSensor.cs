@@ -58,7 +58,7 @@ public class SimpleSensor : Sensor
         if (hit.collider != null)
         {
             Debug.Log("Raycast hit object: " + hit.collider);
-			hitObject.UpdateValues(GetInaccurateDistance(hit.distance), (hit.point - transform.position).normalized);
+			hitObject.UpdateValues(GetInaccurateDistance(hit.distance), currentAngleDegs);
         }
         
         //Done waiting, can call again
