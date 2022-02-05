@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class SimpleSensor : MonoBehaviour
+public class SimpleSensor : Sensor
 {
     public float angleIncAmt = 5;   //This is how many degrees the sensor will adjust every time it sends out a raycast
     public Vector3 currentAngleVector;    //This is the current angle that a raycast is being sent from 
@@ -9,8 +9,11 @@ public class SimpleSensor : MonoBehaviour
     private bool isWaiting = false; //True if the program is currently waiting to cast a ray
     private float rayDelay = 1f;    //Amount of time between raycasts 
     
+	private HitObject hitObject;
+	
     void Start()
     {
+		hitObject = new HitObject(0.0f, 0.0f);
         //Start the current angle as the direction that the vehicle is facing
         currentAngleVector = transform.rotation.eulerAngles;
     }
@@ -55,9 +58,12 @@ public class SimpleSensor : MonoBehaviour
         if (hit.collider != null)
         {
             Debug.Log("Raycast hit object: " + hit.collider);
+			hitObject.UpdateValues(GetInaccurateDistance(hit.distance), (hit.point - transform.position).normalized);
         }
         
         //Done waiting, can call again
         isWaiting = false;
     }
+	
+	public HitObject GetHitObject(){ return hitObject; }
 }

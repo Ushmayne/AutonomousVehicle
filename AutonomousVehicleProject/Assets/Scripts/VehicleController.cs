@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class VehicleController : MonoBehaviour
 {
+	public Vector3 intendedDirection;
+	
+	void Start(){ intendedDirection = transform.forward; }
 	
 	//moves vehicle forward by distance specified ("forward" refers to current facing direction)
 	public void MoveForward(float distance){
@@ -12,4 +15,14 @@ public class VehicleController : MonoBehaviour
     public void Turn(float deg){
 		transform.rotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y + deg, transform.rotation.z);
 	}
+	
+	//turns car left or right
+	public void MakeLeftTurn(){ Turn(-90.0f); }
+	public void MakeRightTurn(){ Turn(90.0f); }
+	
+	//sets intended direction for vehicle as a reference point for error
+	public void SetIntendedDirection(Vector3 dir){ intendedDirection = dir;	}
+	
+	//gets how many degrees of error there is in the direction the vehicle is headed vs the intended direction
+	public float GetDirectionError(){ return Vector3.SignedAngle(intendedDirection, transform.forward, Vector3.up); }
 }
