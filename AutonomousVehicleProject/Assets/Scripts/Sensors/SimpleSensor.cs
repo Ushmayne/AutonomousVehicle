@@ -57,7 +57,7 @@ public class SimpleSensor : Sensor
         //Print info on the hit object if there was a hit object
         if (hit.collider != null)
         {
-            Debug.Log("Raycast hit object: " + hit.collider);
+            //Debug.Log("Raycast hit object: " + hit.collider);
 			hitObject.UpdateValues(GetInaccurateDistance(hit.distance), currentAngleDegs);
         }
         

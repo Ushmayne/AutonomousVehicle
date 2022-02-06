@@ -6,7 +6,7 @@ using UnityEngine;
 	
 	This essentially acts as a pipeline for the sensor inputs to pass through to get to the car and the car's controller
 */
-[RequireComponent(typeof(VehicleController))]
+[RequireComponent(typeof(VehicleController), typeof(VehicleBrain))]
 public class SensorManager : MonoBehaviour
 {
 	[SerializeField] private GameObject sensorParent; //parent object that contains all needed sensors as its children
@@ -19,6 +19,7 @@ public class SensorManager : MonoBehaviour
     void Start(){
 		allHitObjects = new List<HitObject>();
         vehicleController = GetComponent<VehicleController>();
+		GetComponent<VehicleBrain>().sensorManager = this;
     }
 
 	//gets all hit objects from all sensors and stores them in allHitObjects
@@ -38,7 +39,7 @@ public class SensorManager : MonoBehaviour
 		}
 	}
 
-	private void ProcessSensorData(){}
+	public List<HitObject> GetSensorData(){ return allHitObjects; }
 	
 	void Update(){
 		
