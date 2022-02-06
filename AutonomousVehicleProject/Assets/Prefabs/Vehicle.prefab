@@ -78,8 +78,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sensorManager: {fileID: 0}
-  maxVehicleSpeed: 0.4
-  vehicleAcceleration: 0.05
+  maxVehicleSpeed: 0.6
+  vehicleAcceleration: 0.001
+  positionReadingNoise: 0.05
+  maxErrorThreshold: 0.2
   updateInterval: 0.75
   maxDirectionError: 0.05
 --- !u!54 &4938853513056635065
