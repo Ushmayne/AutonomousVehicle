@@ -768,6 +768,7 @@ GameObject:
   - component: {fileID: 1027621757}
   - component: {fileID: 1027621756}
   - component: {fileID: 1027621755}
+  - component: {fileID: 1027621758}
   m_Layer: 5
   m_Name: Start Button
   m_TagString: Untagged
@@ -838,7 +839,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1027621756}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1732041608}
+        m_TargetAssemblyTypeName: VehicleController, Assembly-CSharp
+        m_MethodName: canMove
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1027621756
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -877,6 +890,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1027621753}
   m_CullTransparentMesh: 0
+--- !u!114 &1027621758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1027621753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d452aa7c6a571049978cfd064c54d0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myVehicle: {fileID: 1732041603}
 --- !u!4 &1098844099 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 779533183093188146, guid: 7346d4969a4222048b101e0510b06632, type: 3}
@@ -1290,6 +1316,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5963568633511178970, guid: 7346d4969a4222048b101e0510b06632, type: 3}
   m_PrefabInstance: {fileID: 867103638}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1732041608 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5436196939975389419, guid: 7346d4969a4222048b101e0510b06632, type: 3}
+  m_PrefabInstance: {fileID: 867103638}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1732041603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db1f175589de38c4fbfc400affb7f20c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1752358765
 GameObject:
   m_ObjectHideFlags: 0
@@ -1468,7 +1505,6 @@ GameObject:
   - component: {fileID: 1887016341}
   - component: {fileID: 1887016340}
   - component: {fileID: 1887016339}
-  - component: {fileID: 1887016342}
   m_Layer: 5
   m_Name: Stop Button
   m_TagString: Untagged
@@ -1540,13 +1576,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1732041603}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+      - m_Target: {fileID: 1732041608}
+        m_TargetAssemblyTypeName: VehicleController, Assembly-CSharp
+        m_MethodName: stopVeh
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1590,19 +1626,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1887016337}
   m_CullTransparentMesh: 0
---- !u!114 &1887016342
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1887016337}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d4f7727da86c56f48afd0485a56a2f4a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myVehicle: {fileID: 1732041603}
 --- !u!1 &2132882497
 GameObject:
   m_ObjectHideFlags: 0
