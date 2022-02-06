@@ -71,8 +71,8 @@ public class RadarSensor : Sensor
 		//Print info on the hit object if there was a hit object
 		if (hit.collider != null)
 		{
-			//Debug.Log("Raycast hit object: " + hit.collider);
-			hitObjects.Add(new HitObject(GetInaccurateDistance(hit.distance),currentAngleDegs));
+			//TODO: Replace the Vector3.zero argument with the position of the vehicle.
+			hitObjects.Add(new HitObject(GetInaccurateDistance(hit.distance),currentAngleDegs, this, Vector3.zero));
 		}
 	
 		//Done waiting, can call again

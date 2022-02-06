@@ -1,11 +1,13 @@
 using System.Collections;
 using UnityEngine;
 
+/// <summary>
+/// This sensor shoots out a ray at (0,1,0) relative to its own position
+/// </summary>
 public class SimpleSensor : Sensor
 {
-    public float angleIncAmt = 5;   //This is how many degrees the sensor will adjust every time it sends out a raycast
-    public Vector3 currentAngleVector;    //This is the current angle that a raycast is being sent from 
-    private float currentAngleDegs = 0;
+    public Vector3 angleVector;    //This is the current angle that a raycast is being sent from 
+    public float yAngleDegs;
     private bool isWaiting = false; //True if the program is currently waiting to cast a ray
     private float rayDelay = 1f;    //Amount of time between raycasts 
     
@@ -13,9 +15,12 @@ public class SimpleSensor : Sensor
 	
     void Start()
     {
-		hitObject = new HitObject(0.0f, 0.0f);
+        //TODO: Replace the Vector3.zero argument with the position of the vehicle? Not sure if this is needed as this may just be a placeholder value until the sensor first hits something
+        hitObject = new HitObject(0.0f, 0.0f, this, Vector3.zero);
         //Start the current angle as the direction that the vehicle is facing
-        currentAngleVector = transform.rotation.eulerAngles;
+        //currentAngleVector = transform.rotation.eulerAngles;
+        angleVector = new Vector3(0, 1, 0);
+        yAngleDegs = transform.rotation.eulerAngles.y;
     }
 
     void Update()
@@ -27,7 +32,7 @@ public class SimpleSensor : Sensor
     }
 
     /// <summary>
-    /// Wait for the provided delay and then cast a ray at the current angle
+    /// Wait for the provided delay and then cast a ray at the angle vector
     /// </summary>
     /// <param name="delay">The amount of seconds to wait</param>
     /// <returns></returns>
@@ -38,27 +43,17 @@ public class SimpleSensor : Sensor
         //Wait for the 'delay' number of seconds
         yield return new WaitForSeconds(delay);
         
-        //Increase the float variable that represents the degree to draw the ray at by the angle increment amount
-        currentAngleDegs += angleIncAmt;
-        //Apply modulo 360 to this value so that the value stays in the range [0, 360]
-        currentAngleDegs = currentAngleDegs % 360;
-        //Convert from degrees to radians as we need radians to use the built in Mathf functions in Unity
-        float currentAngleRads = Mathf.Deg2Rad * currentAngleDegs;
-        
-        //Update the x and z component of the angle to fire from within the Vector3 variable
-        currentAngleVector.x = Mathf.Sin(currentAngleRads);
-        currentAngleVector.z = Mathf.Cos(currentAngleRads);
-        
         //Cast a ray from the vehicle's position out in the direction of the current angle variable 
-        Physics.Raycast(transform.position, transform.TransformDirection(currentAngleVector), out RaycastHit hit);
+        Physics.Raycast(transform.position, transform.TransformDirection(angleVector), out RaycastHit hit);
         //Please note, the ray has much longer range than is shown in the debug window
-        Debug.DrawRay(transform.position, transform.TransformDirection(currentAngleVector), Color.red, 0.5f);
+        Debug.DrawRay(transform.position, transform.TransformDirection(angleVector), Color.red, 0.5f);
 
         //Print info on the hit object if there was a hit object
         if (hit.collider != null)
         {
-            //Debug.Log("Raycast hit object: " + hit.collider);
-			hitObject.UpdateValues(GetInaccurateDistance(hit.distance), currentAngleDegs);
+            //TODO: Replace the Vector3.zero argument with the position of the vehicle.
+            hitObject.UpdateValues(GetInaccurateDistance(hit.distance), yAngleDegs, this, Vector3.zero);
+            print("Simple sensor hit object " + hitObject);
         }
         
         //Done waiting, can call again
