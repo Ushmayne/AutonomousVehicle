@@ -3,12 +3,17 @@ using UnityEngine;
 public class VehicleController : MonoBehaviour
 {
 	public Vector3 intendedDirection;
+	private Rigidbody rb;
 	
-	void Start(){ intendedDirection = transform.forward; }
+	void Start(){ 
+		intendedDirection = transform.forward; 
+		rb = GetComponent<Rigidbody>();
+	}
 	
 	//moves vehicle forward by distance specified ("forward" refers to current facing direction)
 	public void MoveForward(float distance){
-		transform.position += transform.forward.normalized * distance; 
+		//transform.position += transform.forward.normalized * distance; 
+		rb.MovePosition(transform.position + (transform.forward.normalized * distance));
 	}
 	
 	//turns vehicle (on y axis) depending on inputted degrees (left and right turns depends on if inputted degrees are negative or positive)
