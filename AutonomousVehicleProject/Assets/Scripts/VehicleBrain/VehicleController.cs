@@ -27,12 +27,12 @@ public class VehicleController : MonoBehaviour
 		transform.rotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y + deg, transform.rotation.z);
 	}
 	
-	public void canNotMove()
+	public void canMove()
 	{
 		isMove = true;
     }
 
-	public void stopVeh()
+	public void canNotMove()
     {
 		isMove = false;
     }
