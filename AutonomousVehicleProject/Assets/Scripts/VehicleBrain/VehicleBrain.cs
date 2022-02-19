@@ -58,12 +58,13 @@ public class VehicleBrain : MonoBehaviour
 			case SPEED_DOWN:
 				SlowDown();
 				break;
-		}
-		
-		
-		Vector3 prevPos = transform.position;
-		vehicleController.ApplySteer();//rotate vehicle
+        }
+
+
+        Vector3 prevPos = transform.position;
+
 		vehicleController.CheckWayPointDistance();//check path process
+		vehicleController.ApplySteer();//rotate vehicle
 		vehicleController.MoveForward(currentVehicleSpeed); //move vehicle
 		
 		//calculate distance travelled and record current position with added noise
