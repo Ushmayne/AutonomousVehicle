@@ -62,7 +62,8 @@ public class VehicleBrain : MonoBehaviour
 		
 		
 		Vector3 prevPos = transform.position;
-		
+		vehicleController.ApplySteer();//rotate vehicle
+		vehicleController.CheckWayPointDistance();//check path process
 		vehicleController.MoveForward(currentVehicleSpeed); //move vehicle
 		
 		//calculate distance travelled and record current position with added noise
