@@ -74,11 +74,6 @@ public class VehicleController : MonoBehaviour
 		transform.Rotate(0f,deg,0f);// = Quaternion.Euler(transform.rotation.x, transform.rotation.y + deg, transform.rotation.z);
 	}
 	//turns vehicle (on y axis) depending on inputted degrees (left and right turns depends on if inputted degrees are negative or positive)
-	public void Turn(float deg)
-	{
-		transform.rotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y + deg, transform.rotation.z);
-	}
-
 	public void canMove()
 	{
 		isMove = true;
