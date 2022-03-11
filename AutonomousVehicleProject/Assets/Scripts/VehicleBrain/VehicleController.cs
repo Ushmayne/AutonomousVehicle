@@ -7,16 +7,28 @@ public class VehicleController : MonoBehaviour
 	public Vector3 intendedDirection;
 	private Rigidbody rb;
 	public bool isMove;
+	//private Quaternion targetLookAt;
 
 
 	void Start()
 	{
 		intendedDirection = transform.forward;
 		rb = GetComponent<Rigidbody>();
-
 		isMove = true;
 	}
 	/*
+		Transform[] pathTransform = path.GetComponentsInChildren<Transform>();
+		nodes = new List<Transform>();
+		for (int i = 0; i < pathTransform.Length; i++)
+		{//gets all nodes
+			if (pathTransform[i] != transform)
+			{//new nodes, add to list
+				nodes.Add(pathTransform[i]);
+			}
+		}
+		isMove = true;
+	}
+
 	// turn the vehicle to face targeted point
 	public void ApplySteer()
 	{
@@ -60,6 +72,11 @@ public class VehicleController : MonoBehaviour
 	public void Turn(float deg)
 	{
 		transform.Rotate(0f,deg,0f);// = Quaternion.Euler(transform.rotation.x, transform.rotation.y + deg, transform.rotation.z);
+	}
+	//turns vehicle (on y axis) depending on inputted degrees (left and right turns depends on if inputted degrees are negative or positive)
+	public void Turn(float deg)
+	{
+		transform.rotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y + deg, transform.rotation.z);
 	}
 
 	public void canMove()

@@ -69,6 +69,8 @@ public class VehicleBrain : MonoBehaviour
 		Sensors();
 		//vehicleController.CheckWayPointDistance();//check path process
 		//vehicleController.ApplySteer();//rotate vehicle
+		vehicleController.CheckWayPointDistance();//check path process
+		vehicleController.ApplySteer();//rotate vehicle
 		vehicleController.MoveForward(currentVehicleSpeed); //move vehicle
 		
 		//calculate distance travelled and record current position with added noise
