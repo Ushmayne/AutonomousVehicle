@@ -23,6 +23,9 @@ public class VehicleBrain : MonoBehaviour
 	[SerializeField] private float maxErrorThreshold = 0.2f;
 	private Vector3 currentCarPosition;
 	private Vector3 distanceToRealPosition;
+	public float sensorLengthCenter = 15f;
+	public float sensorLengthSide = 22f;// sqrt(2) * 15
+	private bool previousTurnLeft;
 	
 	private int speedState = SPEED_DOWN; //car's speed state
 	
@@ -38,6 +41,7 @@ public class VehicleBrain : MonoBehaviour
         vehicleController = GetComponent<VehicleController>();
 		currentCarPosition = new Vector3(0.0f, 0.0f, 0.0f);
 		distanceToRealPosition = transform.position;
+		previousTurnLeft = false;
     }
 
     // Update is called once per frame
@@ -58,12 +62,16 @@ public class VehicleBrain : MonoBehaviour
 			case SPEED_DOWN:
 				SlowDown();
 				break;
-		}
-		
-		
-		Vector3 prevPos = transform.position;
-		
-		vehicleController.MoveForward(currentVehicleSpeed); //move vehicle
+        }
+
+
+        Vector3 prevPos = transform.position;
+		Sensors();
+		//vehicleController.CheckWayPointDistance();//check path process
+		//vehicleController.ApplySteer();//rotate vehicle
+		//vehicleController.CheckWayPointDistance();//check path process
+		//vehicleController.ApplySteer();//rotate vehicle
+		//vehicleController.MoveForward(currentVehicleSpeed); //move vehicle
 		
 		//calculate distance travelled and record current position with added noise
 		Vector3 positionalDifference = (transform.position - prevPos);
@@ -77,6 +85,48 @@ public class VehicleBrain : MonoBehaviour
 		//Debug.Log("Current position with noise: " + currentCarPosition + " | Actual position (Relative): " + (transform.position - distanceToRealPosition));
     }
 	
+	void Sensors(){
+		RaycastHit hit;
+		Vector3 sensorStartPos = transform.position;
+		bool checkLeft, checkRight;
+
+		
+		//three sensors, \|/,45 degrees
+		if(Physics.Raycast(sensorStartPos,transform.forward, out hit, sensorLengthCenter))
+        {// collider in front, need to make rotation
+			Debug.DrawLine(sensorStartPos, hit.point);
+			// check left and right side, to decide which rotate direction
+			checkLeft = Physics.Raycast(sensorStartPos, Quaternion.AngleAxis(-45f, transform.up) * transform.forward, out hit, sensorLengthSide);
+			if(checkLeft)
+				Debug.DrawLine(sensorStartPos, hit.point);
+			checkRight = Physics.Raycast(sensorStartPos, Quaternion.AngleAxis(45f, transform.up) * transform.forward, out hit, sensorLengthSide);
+			if(checkRight)
+				Debug.DrawLine(sensorStartPos, hit.point);
+			
+			// decide rotation direction
+			if(checkLeft && checkRight)
+            {//is facing a straight wall, do the opposite rotation than previous to avoid running into a endless circle
+				if(previousTurnLeft)
+                {//previous direction is left, then turn right instead
+					vehicleController.MakeRightTurn();
+					previousTurnLeft = false; //made right turn, then previous turn is not left
+                }else
+                {//if previous turn is not left, then it is a right turn. this time doing the opposite, left
+					vehicleController.MakeLeftTurn();
+					previousTurnLeft = true; //made left turn, set it to true
+                }
+            }else if(checkLeft)
+            {//collider on the left, need to turn right
+				vehicleController.MakeRightTurn();
+				previousTurnLeft = false;//made right turn, then previous turn is not left
+			}else
+            {// this case checkRight is true
+				vehicleController.MakeLeftTurn();
+				previousTurnLeft = true; //made left turn, set it to true
+			}
+		}
+    }
+
 	void ProcessInformation(){
 		List<HitObject> hitInformation = sensorManager.GetSensorData();
 		//TODO: detect if any distances in hitInformation are too close, then act accordingly (will need to edit HitObject class to retain more information to work with)
@@ -84,7 +134,7 @@ public class VehicleBrain : MonoBehaviour
 		
 		speedState = SPEED_UP;
 		
-		FixDirectionError();
+		//FixDirectionError();
 	}
 	
 	void FixDirectionError(){
