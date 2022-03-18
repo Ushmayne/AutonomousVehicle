@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -8,8 +9,9 @@ public class VehicleController : MonoBehaviour
 	private Rigidbody rb;
 	public bool isMove;
 	//private Quaternion targetLookAt;
-
-
+	
+	public float rotateSpeed = 4.0f;
+	
 	void Start()
 	{
 		intendedDirection = transform.forward;
@@ -71,7 +73,7 @@ public class VehicleController : MonoBehaviour
 	//turns vehicle (on y axis) depending on inputted degrees (left and right turns depends on if inputted degrees are negative or positive)
 	public void Turn(float deg)
 	{
-		transform.Rotate(0f,deg,0f);// = Quaternion.Euler(transform.rotation.x, transform.rotation.y + deg, transform.rotation.z);
+		transform.Rotate(0f,deg,0f);// = Quaternion.Euler(transform.rotation.x, transform.rotation.y + deg, transform.rotation.z);		
 	}
 	//turns vehicle (on y axis) depending on inputted degrees (left and right turns depends on if inputted degrees are negative or positive)
 	public void canMove()
@@ -90,7 +92,7 @@ public class VehicleController : MonoBehaviour
 	//slowly rotate to look at given target
 	private void SlowLookAt(Quaternion targetLookAt)
 	{
-		transform.rotation = Quaternion.Slerp(transform.rotation, targetLookAt, 0.08f);
+		transform.rotation = Quaternion.Slerp(transform.rotation, targetLookAt, Time.deltaTime * rotateSpeed);
 		//makeRota = false;//reset it, wont slerp until it reached this target
 	}
 

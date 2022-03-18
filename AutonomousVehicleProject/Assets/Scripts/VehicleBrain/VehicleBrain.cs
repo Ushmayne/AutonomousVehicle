@@ -52,6 +52,7 @@ public class VehicleBrain : MonoBehaviour
 			
 			ProcessInformation();
 			
+			
 			updateTimer = 0.0f;
 		}
 		
