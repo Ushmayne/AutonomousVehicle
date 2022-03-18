@@ -6,13 +6,14 @@ using UnityEngine.UI;
 public class PositionDisplay : MonoBehaviour
 {
     public Text positionText;
-	public Transform vehicleTransform;
+	public VehicleBrain vehicleBrain;
 
 
     // Update is called once per frame
     void Update()
     {
         //pos = sensorScript.position;
-        positionText.text = "Position X : " + vehicleTransform.position.x.ToString("0.00") + "\n\nPosition Y : " + vehicleTransform.position.z.ToString("0.00");
+        positionText.text = "Position X : " + vehicleBrain.GetSimulationPosition().x.ToString("0.00") + 
+							"\n\nPosition Y : " + vehicleBrain.GetSimulationPosition().z.ToString("0.00");
     }
 }

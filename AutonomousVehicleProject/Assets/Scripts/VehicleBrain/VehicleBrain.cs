@@ -157,4 +157,8 @@ public class VehicleBrain : MonoBehaviour
 		return point + new Vector3(twoDimRandomPoint.x, 0.0f, twoDimRandomPoint.y);
 	}
 	
+	public Vector3 GetSimulationPosition(){
+		return currentCarPosition;
+	}
+	
 }
